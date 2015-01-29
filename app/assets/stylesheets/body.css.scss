@@ -53,5 +53,17 @@
       border-radius: 5%;
       margin-top: 25px;
       margin-right: 10px;
+
+      .shirt_image {
+        float: left;
+        overflow: hidden;
+        margin-top: 20px;
+        margin-left: 25px;
+
+        img {
+          height: 200px;
+          border-radius: 25%;
+        }
+      } 
     }
   }
