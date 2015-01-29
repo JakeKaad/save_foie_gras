@@ -1,19 +1,15 @@
+
+
 #background_geese { 
-		height: 100%;
-		min-height: 600px;
-		width: 100%;
-		min-width: 800px;
 		background: image-url('geese.jpg') no-repeat;
 		position: fixed;
 		margin-top: -70px;
+    height: 100%;
 	}
 
 #store_box {
   position: absolute;
   height: 50%;
-  min-height: 300px;
-  width: 50%;
-  min-width: 400px;
   background: rgba(0, 0, 0, 0.2);
   top: 25%;
   left: 25%;
@@ -22,14 +18,10 @@
 
   #store { 
     #store_sidebar {
-      position: relative;
+      position: absolute;
+      bottom: 5%;
       float: left;
-      min-height: 300px;
-      height: 100%;
-      width: 20%;
-      min-width: 60px;
-      margin-top: 25px;
-      margin-left: 5px;
+      height: 90%;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 5%;
       text-decoration: none;
@@ -41,18 +33,16 @@
         font-weight: 500;
       }
     }
-
     #t_shirt {
-      positon: relative;
+      position: relative;
       float: right;
-      min-height: 300px;
-      height: 100%;
-      width: 75%;
-      min-width: 300px;
+      margin-top: 2.5%;
+      bottom: 5%;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 5%;
-      margin-top: 25px;
       margin-right: 10px;
+      padding: 10px;
+      padding-bottom: 40px;
 
       .shirt_image {
         float: left;
@@ -65,5 +55,5 @@
           border-radius: 25%;
         }
       } 
-    }
   }
+}
