@@ -1,2 +1,4 @@
 #background_geese.col-xs-12.container-fluid
-  = render 'stores/store'
+  = render 'stores/store' unless @nav_tab
+  = render 'pages/farms' if @nav_tab == "farms"
+  = render 'pages/info' if @nav_tab == "info"

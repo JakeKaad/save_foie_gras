@@ -29,6 +29,13 @@ describe PagesController do
         get "index", t_shirt_tab: "womens"
         expect(assigns(:t_shirt_tab)).to eq("womens")
       end
+
+      it "assigns @shirts properly" do 
+        tee_shirt1 = Fabricate(:tee_shirt, gender: "male")
+        tee_shirt2 = Fabricate(:tee_shirt, gender: "female")
+        get "index", t_shirt_tab: "womens"
+        expect(assigns(:shirts)).to eq([tee_shirt2])
+      end
     end
   end
 end

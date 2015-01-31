@@ -16,15 +16,13 @@
             = link_to "Men's", root_path
           %li{:class => ("active" if @t_shirt_tab) }
             = link_to "Women's", root_path(t_shirt_tab: "womens")
-        - unless @t_shirt_tab
-          #mens_shirt
-            .shirt_image.col-xs-2
-              = image_tag("mensshirt.jpg")
-            .description.pull-right.col.xs-2
-              %h5
-                Men's I Love Foie Gras Tee  
-              %span.price.pull-right.col.xs-2
-                Price: $20.00
-              = submit_tag "Order", class: "btn btn-default order_button"
-        - if @t_shirt_tab == "women's"
-          #womens_shirt
+        - @shirts.each do |shirt|
+          .shirt_image.col-xs-2
+            = image_tag(shirt.image_url)
+          .description.pull-right.col.xs-2
+            %h5
+              = shirt.description
+            %span.price.pull-right.col.xs-2
+              = "Price: $#{shirt.price}"
+            = submit_tag "Order", class: "btn btn-default order_button"
+      
