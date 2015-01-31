@@ -8,8 +8,8 @@
 TeeShirt.create(description: "Men's I love Foie Gras T-shirt",
                 price: 20,
                 gender: "male",
-                image_url: "menssshirt.jpg")
+                image_url: "mensshirt.jpg")
 TeeShirt.create(description: "Women's I love Foie Gras T-shirt",
                 price: 20,
                 gender: "female",
-                image_url: "womenssshirt.jpg")
+                image_url: "womensshirt.jpg")
