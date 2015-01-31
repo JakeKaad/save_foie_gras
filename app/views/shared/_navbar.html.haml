@@ -11,9 +11,9 @@
     / Collect the nav links, forms, and other content for toggling
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-center#navbar_ul
-        %li
-          = link_to "Farms"
-        %li.active
-          = link_to "Store"
-        %li
-          = link_to "Info"
+        %li{ :class => ("active" if @nav_tab == "farms") }
+          = link_to "Farms", root_path(nav_tab: "farms")
+        %li{ :class => ("active" unless @nav_tab) }
+          = link_to "Store", root_path
+        %li{ :class => ("active" if @nav_tab == "info") }
+          = link_to "Info", root_path(nav_tab: "info")

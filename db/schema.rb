@@ -14,6 +14,12 @@
 ActiveRecord::Schema.define(version: 20150131173051) do
 
   create_table "tee_shirts", force: :cascade do |t|
+    t.string   "description"
+    t.string   "gender"
+    t.integer  "price"
+    t.string   "image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

@@ -44,17 +44,31 @@
       margin-right: 10px;
       padding: 10px;
       padding-bottom: 40px;
+      color: white;
 
       .shirt_image {
         float: left;
-        overflow: hidden;
         margin-top: 20px;
-        margin-left: 25px;
 
         img {
           height: 200px;
           border-radius: 25%;
         }
+      }
+      .description {
+        text-align: center;
+        margin-right: 50px;
+      }
+
+      .price {
+        margin-top: 40px;
+        margin-right: 50px; 
       } 
+
+      .order_button {
+        float: right;
+        margin-top: 170px;
+        margin-right: -70px;
+      }
   }
 }
