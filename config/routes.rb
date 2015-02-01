@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   resources 'pages', only: [:index]
 
-  resources "shopping_cart_items", only: [:new, :index]
+  resources "shopping_cart_items", only: [:create, :index]
 end
