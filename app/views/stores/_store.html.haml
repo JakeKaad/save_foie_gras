@@ -9,7 +9,7 @@
           = link_to "Hats", root_path(store_tab: "hats")
         %li{:class => ("active" if @store_tab == "patches" )}
           = link_to "Patches", root_path(store_tab: "patches")
-    - unless @store_tab 
+    - unless @store_tab
       #t_shirt.col-xs-8
         %ul.nav.nav-tabs.nav-justified
           %li{:class => ("active" unless @t_shirt_tab) }
@@ -22,7 +22,10 @@
           .description.pull-right.col.xs-2
             %h5
               = shirt.description
-            %span.price.pull-right.col.xs-2
-              = "Price: $#{shirt.price}"
-            = submit_tag "Order", class: "btn btn-default order_button"
-      
+            %p.pull-right.form-control
+              = "$#{shirt.price}"
+            = bootstrap_form_tag url: '/shopping_cart' do |f|
+              = f.select :size, options_for_select(["XS", "S", "M", "L", "XL"], "Size"), class: "size-select"
+              = f.number_field :quantity
+              = f.submit "Order", class: "btn btn-default order_button"
+    
