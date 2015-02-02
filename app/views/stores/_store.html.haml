@@ -25,8 +25,8 @@
             %p.pull-right.form-control
               = "$#{shirt.price}"
             = bootstrap_form_for(@shopping_cart_item) do |f|
-              = f.hidden_field :product_name, product_name: shirt.description
-              = f.hidden_field :item_price, item_price: shirt.price
+              = f.hidden_field :product_name, value: shirt.description
+              = f.hidden_field :item_price, value: shirt.price
               = f.select :size, options_for_select(["XS", "S", "M", "L", "XL"], "Size"), class: "size-select"
               = f.number_field :quantity
               = f.submit "Order", class: "btn btn-default order_button"

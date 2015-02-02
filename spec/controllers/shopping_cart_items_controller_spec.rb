@@ -1,6 +1,35 @@
 require 'spec_helper'
 
 describe ShoppingCartItemsController do 
+
+  describe "GET index" do 
+    it "assigns a cart_token if there is none in session" do 
+      get :index
+      expect(session[:cart_token]).to_not be_blank
+    end
+
+    it "doesn't assign a cart token if there is already one in session" do 
+      get :index
+      cart_token = session[:cart_token]
+      get :index
+      expect(session[:cart_token]).to eq(cart_token)
+    end
+
+    it "assigns @shopping_cart_items" do 
+      get :index 
+      expect(assigns(:shopping_cart_items)).to_not be_nil
+    end
+
+    it "assigns @shopping_cart_items that match cart_token" do 
+      cart_item1 = Fabricate(:shopping_cart_item, cart_token: "abc")
+      cart_item2 = Fabricate(:shopping_cart_item, cart_token: "abc")
+      session[:cart_token] = "abc"
+      get :index
+      expect(assigns(:shopping_cart_items)).to eq([cart_item1, cart_item2])
+    end
+    
+  end
+
   describe "POST new" do 
     context "with valid input" do
       it "should redirect to shopping cart" do 

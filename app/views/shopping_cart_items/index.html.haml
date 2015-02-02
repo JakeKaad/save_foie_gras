@@ -4,11 +4,11 @@
       %article
         %header
           %h2 My Queue
-        = bootstrap_form_tag url: '/checkout' do 
+        = bootstrap_form_tag url: '/checkout' do |f|
           %table.table
             %thead
               %tr
-                %th(width="30%") Description
+                %th(width="20%") Description
                 %th(width="20%") Size
                 %th(width="20%") Quantity
                 %th(width="15%") Item Price
@@ -16,19 +16,19 @@
             %tbody
               - @shopping_cart_items.each do |shopping_cart_item|
                 %tr
-                  = f.hidden_field "shopping_cart_item[][id]", shopping_cart_item.id
+                  = f.hidden_field :id, value: shopping_cart_item.id
                   %td
-                    = f.text_field"shopping_cart_item[]][description]",  queue_item.description
+                    = shopping_cart_item.product_name
                   %td
-                    = f.select :size, options_for_select(["XS", "S", "M", "L", "XL"], "Size"), class: "size-select"
+                    = shopping_cart_item.size
                   %td
                     = number_field_tag :quantity, shopping_cart_item.quantity, in: 1..99
-                  %td.form-control
+                  %td
                     = shopping_cart_item.item_price
-                  %td.form-control
+                  %td
                     = shopping_cart_item.total_price
                   %td
                     = link_to shopping_cart_item, method: :delete do
                       %i.glyphicon.glyphicon-remove
-        = f.submit "Update", class: "edit_button"
-        = f.submit "Checkout", class: "btn btn-default"
+          = f.submit "Update", class: 'btn btn-default'          
+          = f.submit "Checkout", class: "btn btn-default"
