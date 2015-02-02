@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150201162153) do
+ActiveRecord::Schema.define(version: 20150201234419) do
 
   create_table "shopping_cart_items", force: :cascade do |t|
     t.string  "product_name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20150201162153) do
     t.integer "total_price"
     t.string  "size"
     t.integer "quantity"
+    t.string  "cart_token"
   end
 
   create_table "tee_shirts", force: :cascade do |t|
