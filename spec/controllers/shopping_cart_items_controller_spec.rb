@@ -73,6 +73,7 @@ describe ShoppingCartItemsController do
 
   describe "DELETE destroy" do 
     let(:shopping_cart_item) { Fabricate(:shopping_cart_item, cart_token: "abc") }
+    before { session[:cart_token] = "abc" }
 
     it "redirects to the shopping cart" do
       delete :destroy, id: shopping_cart_item.id
@@ -83,11 +84,18 @@ describe ShoppingCartItemsController do
       delete :destroy, id: shopping_cart_item.id 
       expect(ShoppingCartItem.all.empty?).to be_truthy
     end 
+
+    it "doesn't delete the shopping cart item if cart token doesnt match session cart token" do 
+      session[:cart_token] = "def"
+      delete :destroy, id: shopping_cart_item.id 
+      expect(ShoppingCartItem.all.empty?).to be_falsey
+    end
   end
 
   describe "POST update_shopping_cart" do
     context "with valid input" do 
       let(:shopping_cart_item) { Fabricate(:shopping_cart_item, cart_token: "abc", quantity: 1, size: "S", item_price: 20) }
+      before { session[:cart_token] = "abc" }
 
       it "redirects to the shopping cart" do 
         post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "S"}]
@@ -107,6 +115,12 @@ describe ShoppingCartItemsController do
       it "updates the shopping cart item's total_price if quantity changes" do 
         post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "L"}]
         expect(shopping_cart_item.reload.total_price).to eq(60)
+      end
+
+      it "doesn't update the cart if the item's cart_token is different than session cart_token" do 
+        session[:cart_token] = "def"
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "L"}]
+        expect(shopping_cart_item.reload.quantity).to eq(1)
       end
     end
 

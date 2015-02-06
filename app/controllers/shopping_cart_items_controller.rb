@@ -17,13 +17,13 @@ class ShoppingCartItemsController < ApplicationController
   end
 
   def update_shopping_cart
-    update_shopping_cart_items
+    update_shopping_cart_items 
     redirect_to shopping_cart_items_path
   end
 
   def destroy
     find_shopping_cart_item(params[:id])
-    @shopping_cart_item.delete
+    @shopping_cart_item.delete if @shopping_cart_item.cart_token == session[:cart_token]
     redirect_to shopping_cart_items_path
   end
 
@@ -50,9 +50,11 @@ class ShoppingCartItemsController < ApplicationController
     ActiveRecord::Base.transaction do
       params[:shopping_cart_items].each do |shopping_cart_item_data|
         find_shopping_cart_item(shopping_cart_item_data[:id])
-        @shopping_cart_item.update_attributes(quantity: shopping_cart_item_data[:quantity], size: shopping_cart_item_data[:size])
-        @shopping_cart_item.set_total_price
-        @shopping_cart_item.save
+        if @shopping_cart_item.cart_token == session[:cart_token]
+          @shopping_cart_item.update_attributes(quantity: shopping_cart_item_data[:quantity], size: shopping_cart_item_data[:size])
+          @shopping_cart_item.set_total_price
+          @shopping_cart_item.save
+        end
       end
     end
   end
