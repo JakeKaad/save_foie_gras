@@ -70,4 +70,64 @@ describe ShoppingCartItemsController do
       end
     end
   end
+
+  describe "DELETE destroy" do 
+    let(:shopping_cart_item) { Fabricate(:shopping_cart_item, cart_token: "abc") }
+
+    it "redirects to the shopping cart" do
+      delete :destroy, id: shopping_cart_item.id
+      expect(response).to redirect_to shopping_cart_items_path
+    end
+
+    it "deletes the shopping cart item" do 
+      delete :destroy, id: shopping_cart_item.id 
+      expect(ShoppingCartItem.all.empty?).to be_truthy
+    end 
+  end
+
+  describe "POST update_shopping_cart" do
+    context "with valid input" do 
+      let(:shopping_cart_item) { Fabricate(:shopping_cart_item, cart_token: "abc", quantity: 1, size: "S", item_price: 20) }
+
+      it "redirects to the shopping cart" do 
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "S"}]
+        expect(response).to redirect_to redirect_to shopping_cart_items_path
+      end 
+
+      it "updates the shopping cart item's quantity" do 
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "S"}]
+        expect(shopping_cart_item.reload.quantity).to eq(3)
+      end
+
+      it "updates the shopping cart item's size" do 
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "L"}]
+        expect(shopping_cart_item.reload.size).to eq("L")
+      end
+
+      it "updates the shopping cart item's total_price if quantity changes" do 
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "L"}]
+        expect(shopping_cart_item.reload.total_price).to eq(60)
+      end
+    end
+
+    context "with invalid input" do 
+      let(:shopping_cart_item) { Fabricate(:shopping_cart_item, cart_token: "abc", quantity: 1, size: "S", item_price: 20) }
+
+      it "redirects to the shopping cart" do 
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: "p", size: 3}]
+        expect(response).to redirect_to shopping_cart_items_path
+      end
+
+      it "doesn't update the shopping cart with an invalid quantity" do 
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: "p", size: 3}]
+        expect(shopping_cart_item.reload.quantity).to eq(1)
+      end
+
+      it "doesn't update the shopping cart with an invalid size" do 
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: "p", size: 3}]
+        expect(shopping_cart_item.reload.size).to eq("S")
+      end
+    end
+
+  end
 end
