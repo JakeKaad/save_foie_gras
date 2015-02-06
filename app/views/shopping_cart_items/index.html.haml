@@ -4,7 +4,7 @@
       %article
         %header
           %h2 My Queue
-        = bootstrap_form_tag url: '/checkout' do |f|
+        = bootstrap_form_tag url: '/update_shopping_cart' do |f|
           %table.table
             %thead
               %tr
@@ -16,13 +16,12 @@
             %tbody
               - @shopping_cart_items.each do |shopping_cart_item|
                 %tr
-                  = f.hidden_field :id, value: shopping_cart_item.id
                   %td
                     = shopping_cart_item.product_name
                   %td
                     = shopping_cart_item.size
                   %td
-                    = number_field_tag :quantity, shopping_cart_item.quantity, in: 1..99
+                    = number_field_tag "shopping_cart_items[][quantity]", shopping_cart_item.quantity, in: 1..99
                   %td
                     = shopping_cart_item.item_price
                   %td
@@ -30,5 +29,7 @@
                   %td
                     = link_to shopping_cart_item, method: :delete do
                       %i.glyphicon.glyphicon-remove
+                  = f.hidden_field "shopping_cart_items[][id]", value: shopping_cart_item.id
+                  = f.hidden_field "shopping_cart_items[][size]", value: shopping_cart_item.size
           = f.submit "Update", class: 'btn btn-default'          
           = f.submit "Checkout", class: "btn btn-default"
