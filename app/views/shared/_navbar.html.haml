@@ -18,5 +18,5 @@
         %li{ :class => ("active" if @nav_tab == "info") }
           = link_to "Info", root_path(nav_tab: "info")
         - if session[:cart_token]
-          %li
-            = link_to "Shopping Cart", shopping_cart_items_path
+          %li{ :class => ("active" if @nav_tab == "shopping cart") }
+            = link_to "Shopping Cart", shopping_cart_items_path(nav_tab: "shopping cart")          }
