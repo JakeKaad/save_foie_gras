@@ -19,4 +19,4 @@
           = link_to "Info", root_path(nav_tab: "info")
         - if session[:cart_token]
           %li{ :class => ("active" if @nav_tab == "shopping cart") }
-            = link_to "Shopping Cart", shopping_cart_items_path(nav_tab: "shopping cart")          }
+            = link_to "Shopping Cart", shopping_cart_items_path(nav_tab: "shopping cart")
