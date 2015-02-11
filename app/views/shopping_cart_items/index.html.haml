@@ -31,5 +31,5 @@
                       %i.glyphicon.glyphicon-remove
                   = f.hidden_field "shopping_cart_items[][id]", value: shopping_cart_item.id
                   = f.hidden_field "shopping_cart_items[][size]", value: shopping_cart_item.size
-          = f.submit "Update", class: 'btn btn-default'          
+          = f.submit "Update", class: 'btn btn-default', data: { update: true}     
           = f.submit "Checkout", class: "btn btn-default"

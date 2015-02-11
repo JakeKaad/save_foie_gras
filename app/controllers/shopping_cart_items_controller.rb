@@ -18,7 +18,7 @@ class ShoppingCartItemsController < ApplicationController
 
   def update_shopping_cart
     update_shopping_cart_items 
-    redirect_to shopping_cart_items_path
+    redirect_to shopping_cart_items_path if params[:commit]
   end
 
   def destroy

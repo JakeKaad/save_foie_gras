@@ -97,29 +97,29 @@ describe ShoppingCartItemsController do
       let(:shopping_cart_item) { Fabricate(:shopping_cart_item, cart_token: "abc", quantity: 1, size: "S", item_price: 20) }
       before { session[:cart_token] = "abc" }
 
-      it "redirects to the shopping cart" do 
-        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "S"}]
+      it "redirects to the shopping cart when the update button is pressed" do 
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "S"}], commit: "update"
         expect(response).to redirect_to redirect_to shopping_cart_items_path
       end 
 
       it "updates the shopping cart item's quantity" do 
-        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "S"}]
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "S"}], commit: "update"
         expect(shopping_cart_item.reload.quantity).to eq(3)
       end
 
       it "updates the shopping cart item's size" do 
-        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "L"}]
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "L"}], commit: "update"
         expect(shopping_cart_item.reload.size).to eq("L")
       end
 
       it "updates the shopping cart item's total_price if quantity changes" do 
-        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "L"}]
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "L"}], commit: "update"
         expect(shopping_cart_item.reload.total_price).to eq(60)
       end
 
       it "doesn't update the cart if the item's cart_token is different than session cart_token" do 
         session[:cart_token] = "def"
-        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "L"}]
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: 3, size: "L"}], commit: "update"
         expect(shopping_cart_item.reload.quantity).to eq(1)
       end
     end
@@ -128,17 +128,17 @@ describe ShoppingCartItemsController do
       let(:shopping_cart_item) { Fabricate(:shopping_cart_item, cart_token: "abc", quantity: 1, size: "S", item_price: 20) }
 
       it "redirects to the shopping cart" do 
-        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: "p", size: 3}]
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: "p", size: 3}], commit: "update"
         expect(response).to redirect_to shopping_cart_items_path
       end
 
       it "doesn't update the shopping cart with an invalid quantity" do 
-        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: "p", size: 3}]
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: "p", size: 3}], commit: "update"
         expect(shopping_cart_item.reload.quantity).to eq(1)
       end
 
       it "doesn't update the shopping cart with an invalid size" do 
-        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: "p", size: 3}]
+        post :update_shopping_cart,  shopping_cart_items: [{id: shopping_cart_item.id, quantity: "p", size: 3}], commit: "update"
         expect(shopping_cart_item.reload.size).to eq("S")
       end
     end
