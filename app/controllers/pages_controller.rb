@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  before_action :set_nav_tab
 
   def index
     @shopping_cart_item = ShoppingCartItem.new

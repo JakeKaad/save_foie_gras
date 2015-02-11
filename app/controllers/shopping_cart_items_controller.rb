@@ -1,5 +1,6 @@
 class ShoppingCartItemsController < ApplicationController
   before_action :assign_cart_token
+  before_action :set_nav_tab, only: [:index]
 
   def index 
     @shopping_cart_items = ShoppingCartItem.where(cart_token: session[:cart_token])
